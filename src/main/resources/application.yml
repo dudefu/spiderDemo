@@ -1,0 +1,52 @@
+server:
+  port: 8088
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1/company?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: xinyi2513
+    driver-class-name: com.mysql.jdbc.Driver
+    ###################����Ϊdruid���ӵ�����###########################
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      max-active: 20
+      min-idle: 5
+      initial-size: 5
+      # ���û�ȡ���ӵȴ���ʱ��ʱ��
+      maxWait: 60000
+      # ���ü����òŽ���һ�μ�⣬�����Ҫ�رյĿ������ӣ���λ�Ǻ���
+      timeBetweenEvictionRunsMillis: 60000
+      # ����һ�������ڳ�����С�����ʱ�䣬��λ�Ǻ���
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # ��PSCache������ָ��ÿ��������PSCache�Ĵ�С
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # ���ü��ͳ�����ص�filters��ȥ�����ؽ���sql�޷�ͳ�ƣ�'wall'���ڷ���ǽ���˴���filter�޸ĵĵط�
+      filters:
+        commons-log:
+          connection-logger-name: stat,wall,log4j
+      # ͨ��connectProperties��������mergeSql���ܣ���SQL��¼
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # �ϲ����DruidDataSource�ļ������
+      useGlobalDataSourceStat: true
+  #jsp page
+  #new springboot version
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+  resources:
+    static-locations: classpath:/static
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.zsx.crawler.mapper
+#  mybatis ��ӡsql���
+logging:
+  level:
+    com.example.demo.dao : debug
